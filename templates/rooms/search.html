@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+
+{% block page_title %}
+    Search
+{% endblock page_title %}
+
+{% block search-bar %}
+{% endblock search-bar %}
+
+{% block content %}
+    <h2>Search !</h2>
+    <form method="GET" action="{% url 'rooms:search' %}">
+        <div>
+            <label for="city">City</label>
+            <input value="{{city}}" id="city" name="city" placeholder="Search by City"/>
+        </div>
+        <div>
+            <label for="country">Country</label>
+            <select id="country" name="country">
+                
+                {% for country in countries %}
+                    <option value="{{country.code}}" {% if country.code == s_country %}selected{% endif %}>{{country.name}}</option>
+                {% endfor %}
+                    
+            </select>
+            
+        </div>
+
+        <div>
+            <label for="room_type">Room Types</label>
+            <select id="room_type" name="room_type">
+                <option value="0" {% if s_room_type == 0 %}selected{% endif %}>Any kind</option>
+                {% for room_type in room_types %}
+                    <option value="{{room_type.pk}}" {% if s_room_type == room_type.pk %}selected{% endif %}>{{room_type.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div>
+            <label for="price">Price</label>
+            <input type="number" value="{{price}}" name="price" id="price" placeholder="Price"/> 
+        </div>
+
+        <div>
+            <label for="guests">Guests</label>
+            <input type="number" value="{{guests}}" name="guests" id="guests" placeholder="Guests"/> 
+        </div>
+
+        <div>
+            <label for="bedrooms">Bedrooms</label>
+            <input type="number" value="{{bedrooms}}" name="bedrooms" id="bedrooms" placeholder="Bedrooms"/> 
+        </div>
+
+        <div>
+            <label for="beds">Beds</label>
+            <input type="number" value="{{beds}}" name="beds" id="beds" placeholder="Beds"/> 
+        </div>
+
+        <div>
+            <label for="baths">Baths</label>
+            <input type="number" value="{{baths}}" name="baths" id="baths" placeholder="Baths"/> 
+        </div>
+
+        <div>
+            <label for="instant">Instant Book Only?</label>
+            <input type="checkbox" name="instant" id="instant" 
+            {% if instant %}
+                checked
+            {% endif %}
+                /> 
+        </div>
+
+        <div>
+            <label for="super_host">By Superhost Only?</label>
+            <input type="checkbox"  name="super_host" id="super_host" 
+            {% if super_host %}
+                checked
+            {% endif %}
+                /> 
+        </div>
+
+        <div>
+            <h3 >Amenities</h3>
+            <ul>
+                
+                {% for amenity in amenities %}
+                    <li>
+                        <label for="a_{{amenity.pk}}">{{amenity.name}}</label>
+                        <input id="a_{{amenity.pk}}" value="{{amenity.pk}}" name="amenities" type="checkbox"
+                        {% if amenity.pk|slugify in s_amenities %}checked{% endif %}/>
+                    </li>
+                {% endfor %}
+                    
+            </ul>
+        </div>
+
+        <div>
+            <h3 >Facilities</h3>
+            <ul>
+                
+                {% for facility in facilities %}
+                    <li>
+                        <label for="f_{{facility.pk}}">{{facility.name}}</label>
+                        <input id="f_{{facility.pk}}" value="{{facility.pk}}" name="facilities" type="checkbox"
+                        {% if facility.pk|slugify in s_facilities %}checked{% endif %}/>
+                    </li>
+                {% endfor %}
+                    
+            </ul>
+        </div>
+
+        
+
+        <button>Search</button>
+    </form>
+{% endblock content %}
+    

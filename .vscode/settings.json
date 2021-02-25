@@ -1,0 +1,10 @@
+{
+    "python.linting.pylintEnabled": false,
+    "python.linting.flake8Enabled": true,
+    "python.linting.enabled": true,
+    "python.pythonPath": "/home/soo4767/.local/share/virtualenvs/airbnb-clone-JyUuN_L2/bin/python",
+    "python.formatting.provider": "black",
+    "python.linting.flake8Args": [
+        "--max-line-lenth=88"
+    ]
+}
