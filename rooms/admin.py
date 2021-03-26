@@ -38,6 +38,7 @@ class RoomAdmin(admin.ModelAdmin):
                     "name",
                     "description",
                     "country",
+                    "city",
                     "address",
                     "price",
                 )
@@ -69,7 +70,7 @@ class RoomAdmin(admin.ModelAdmin):
             {
                 "classes": ("collapse",),
                 "fields": (
-                    "amenitise",
+                    "amenities",
                     "facilities",
                     "houes_rules",
                 ),
@@ -94,7 +95,7 @@ class RoomAdmin(admin.ModelAdmin):
         "check_in",
         "check_out",
         "instant_book",
-        "count_amenitise",
+        "count_amenities",
         "count_photos",
         "total_rating",
     )
@@ -103,7 +104,7 @@ class RoomAdmin(admin.ModelAdmin):
         "instant_book",
         "host__superhost",
         "room_type",
-        "amenitise",
+        "amenities",
         "facilities",
         "houes_rules",
         "city",
@@ -117,13 +118,13 @@ class RoomAdmin(admin.ModelAdmin):
     )
 
     filter_horizontal = (
-        "amenitise",
+        "amenities",
         "facilities",
         "houes_rules",
     )
 
-    def count_amenitise(self, obj):
-        return obj.amenitise.count()
+    def count_amenities(self, obj):
+        return obj.amenities.count()
 
     def count_photos(self, obj):
         return obj.photos.count()

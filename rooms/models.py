@@ -67,7 +67,7 @@ class Room(core_models.TimeStampedModel):
     city = models.CharField(max_length=80)
     price = models.IntegerField()
     address = models.CharField(max_length=140)
-    guests = models.IntegerField()
+    guests = models.IntegerField(help_text="How many people will be staying?")
     beds = models.IntegerField()
     bedrooms = models.IntegerField()
     baths = models.IntegerField()
@@ -80,7 +80,7 @@ class Room(core_models.TimeStampedModel):
     room_type = models.ForeignKey(
         RoomType, related_name="rooms", on_delete=models.SET_NULL, null=True
     )
-    amenitise = models.ManyToManyField(Amenity, related_name="rooms", blank=True)
+    amenities = models.ManyToManyField(Amenity, related_name="rooms", blank=True)
     facilities = models.ManyToManyField(Facility, related_name="rooms", blank=True)
     houes_rules = models.ManyToManyField(HouseRule, related_name="rooms", blank=True)
 
