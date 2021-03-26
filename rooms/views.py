@@ -82,13 +82,15 @@ class SearchView(View):
                 for facility in facilities:
                     filter_args["facilities"] = facility
 
-                qs = models.Room.objects.filter(**filter_args)
+                qs = models.Room.objects.filter(**filter_args).order_by("-created")
 
-                paginator = Paginator(qs, 10, orphans=5)
+                paginator = Paginator(qs, 1)
 
-                page = request.GET.get("page", 1)
+                page = request.GET.get("page")
 
                 rooms = paginator.get_page(page)
+
+                path = request.get_full_path()
 
                 return render(
                     request,
@@ -96,6 +98,7 @@ class SearchView(View):
                     {
                         "form": form,
                         "rooms": rooms,
+                        "path": path,
                     },
                 )
         else:

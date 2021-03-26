@@ -17,10 +17,33 @@
         <h3>Results</h3>
 
         
-        {% for room in rooms %}
+        {% for room in rooms.object_list %}
             <h3>{{room.name}}</h3>
         {% endfor %}
+        
+        <h4>
+        
+        {% if rooms.has_previous %}
+            <a href="{{path}}&page={{rooms.number|add:-1}}">Previous</a>
+        {% endif %}
+             
+
+        Page {{rooms.number}} of {{rooms.paginator.num_pages}}
+
+        </br>
+        {% for page in rooms.paginator.page_range %}
+            {{page}}
+        {% endfor %}
+
+        {% if rooms.has_next %}
+            <a href="{{path}}&page={{rooms.number|add:1}}">Next</a>
+        {% endif %}
             
+        
+        </h4>
+            
+            
+
 
 {% endblock content %}
     
