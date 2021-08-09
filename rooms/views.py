@@ -1,3 +1,4 @@
+from django.utils import timezone
 from django.views.generic import ListView, DetailView, View
 from django.shortcuts import render
 from django_countries import countries
@@ -84,7 +85,7 @@ class SearchView(View):
 
                 qs = models.Room.objects.filter(**filter_args).order_by("-created")
 
-                paginator = Paginator(qs, 1)
+                paginator = Paginator(qs, 10, orphans=5)
 
                 page = request.GET.get("page")
 
