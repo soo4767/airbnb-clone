@@ -74,7 +74,7 @@ class User(AbstractUser):
             "Verify Airbnb Account",
             strip_tags(html_message),
             settings.EMAIL_HOST_USER,
-            [self.email],
+            [self.username],
             fail_silently=False,
             html_message=html_message,
         )
