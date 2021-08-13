@@ -57,7 +57,7 @@ class Command(BaseCommand):
 
                 magic_number = random.randint(0, 15)
                 if magic_number % 2 == 0:
-                    room.amenitise.add(a)
+                    room.amenities.add(a)
 
             for f in facilities:
                 print("Making facilities...")
