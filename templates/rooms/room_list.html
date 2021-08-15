@@ -8,32 +8,37 @@
     
     
     {% block content %}   
+        <div class="container mx-auto">
+            <div class="container mx-auto rounded-2xl bg-center bg-cover bg-gray-800 h-50vh mb-24 mt-32" style="background-image: url(https://images.unsplash.com/photo-1535189043414-47a3c49a0bed);">
 
-    {{now}}
-        {% for room in rooms %}
-        <h3>
-            <a href="{% url 'rooms:detail' room.pk %}">{{room.name}} / ${{room.price}}</h3>
-        </h3>
-        {% endfor %}
 
-        <h5>
+        </div>
+                <div class="flex flex-wrap">
+                {% for room in rooms %}
+                    {% include 'partials/room_card.html' with room=room %}
+                {% endfor %}
+                </div>
+                <h5>
+                    
+                    {% if page_obj.has_previous %}
+                        <a href="/?page={{page_obj.previous_page_number}}">Previous</a>
+                    {% endif %}
+                        
+                    Page {{page_obj.number}} of {{page_obj.paginator.num_pages}}
+                    
+                    {% if page_obj.has_next %}
+                        <a href="/?page={{page_obj.next_page_number}}">Next</a>
+                        
+                    {% endif %}
+                        
+                </h5>
+                
             
-            {% if page_obj.has_previous %}
-                <a href="/?page={{page_obj.previous_page_number}}">Previous</a>
-            {% endif %}
-                
-            Page {{page_obj.number}} of {{page_obj.paginator.num_pages}}
-            
-            {% if page_obj.has_next %}
-                <a href="/?page={{page_obj.next_page_number}}">Next</a>
-                
-            {% endif %}
-                
-        </h5>
+            {% for page in page_range %}
+                <a href="/?page={{page}}">{{page}}</a>
+            {% endfor %}
         
-    
-    {% for page in page_range %}
-        <a href="/?page={{page}}">{{page}}</a>
-    {% endfor %}
+        </div>
+
         
     {% endblock content %}
