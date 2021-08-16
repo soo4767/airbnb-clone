@@ -8,30 +8,32 @@
     
     
     {% block content %}   
-        <div class="container mx-auto">
+        <div class="container mx-auto pb-10">
             <div class="container mx-auto rounded-2xl bg-center bg-cover bg-gray-800 h-50vh mb-24 mt-32" style="background-image: url(https://images.unsplash.com/photo-1535189043414-47a3c49a0bed);">
-
-
-        </div>
-                <div class="flex flex-wrap">
+            </div>
+                <div class="flex flex-wrap mb-10">
                 {% for room in rooms %}
-                    {% include 'partials/room_card.html' with room=room %}
+                    {% include 'mixins/room_card.html' with room=room %}
                 {% endfor %}
                 </div>
-                <h5>
+                <div class="flex items-center justify-center container">
                     
                     {% if page_obj.has_previous %}
-                        <a href="/?page={{page_obj.previous_page_number}}">Previous</a>
+                        <a href="/?page={{page_obj.previous_page_number}}" class="text-green-500">
+                            <i class="fas fa-arrow-left fa-lg"></i>
+                        </a>
                     {% endif %}
                         
-                    Page {{page_obj.number}} of {{page_obj.paginator.num_pages}}
+                    <span class="mx-3 font-semibold text-lg">{{page_obj.number}} of {{page_obj.paginator.num_pages}}</span>
                     
                     {% if page_obj.has_next %}
-                        <a href="/?page={{page_obj.next_page_number}}">Next</a>
+                        <a href="/?page={{page_obj.next_page_number}}" class="text-green-500">
+                            <i class="fas fa-arrow-right fa-lg"></i>
+                        </a>
                         
                     {% endif %}
                         
-                </h5>
+                </div>
                 
             
             {% for page in page_range %}

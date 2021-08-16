@@ -9,13 +9,18 @@
 
 {% block content %}
 
-    {% include 'partials/social_login.html' %}
-    
-    <form method="POST" action="{% url 'users:login' %}">
-        {% csrf_token %}
-        {{form.as_p}}
+    <div class="container lg:w-5/12 md:w-1/2 xl:w-1/4 mx-auto my-10 flex flex-col items-center border border-gray-400 p-6">
+        {% include 'partials/social_login.html' %}
 
-        <button>Login</button>
-    </form>
+
+        {% include 'mixins/auth/auth_form.html' with form=form cta="Log in" %}
+
+
+
+        <div class="mt-5">
+            <span class="mr-2">Don't have an account?</span>
+            <a class="text-red-400 font-semibold" href="{% url 'users:signup' %}">Sign up</a>
+        </div>
+    </div>
 {% endblock content %}
     
