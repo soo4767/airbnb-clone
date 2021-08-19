@@ -1,10 +1,11 @@
+from django.contrib.auth import mixins
 from django.http.response import Http404
-from django.utils import timezone
-from django.views.generic import ListView, DetailView, View, UpdateView
+from django.views.generic import ListView, DetailView, View, UpdateView, FormView
 from django.shortcuts import render, redirect, reverse
-from django_countries import countries
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
 from users import mixins as user_mixins
 from rooms import models, forms
 
@@ -169,7 +170,54 @@ def delete_photo(request, room_pk, photo_pk):
     user = request.user
 
     try:
-    
-    except e:
+        room = models.Room.objects.get(pk=room_pk)
+        if room.host.pk != user.pk:
+            messages.error(request, "Can't delete that photo")
+        else:
+            models.Photo.objects.filter(pk=photo_pk).delete()
+            messages.success(request, "Photo Deleted")
+        return redirect(reverse("rooms:photos", kwargs={"pk": room_pk}))
+    except models.Room.DoesNotExist:
+        return redirect(reverse("core:home"))
 
-    return redirect(reverse("rooms:photos", kwargs={"pk": room_pk}))
+
+class EditPhotoView(user_mixins.LoggedInOnlyView, SuccessMessageMixin, UpdateView):
+    model = models.Photo
+    template_name = "rooms/photo_edit.html"
+    fields = ("caption",)
+    pk_url_kwarg = "photo_pk"
+
+    success_message = "Photo Updated"
+
+    def get_success_url(self):
+        room_pk = self.kwargs.get("room_pk")
+        return reverse("rooms:photos", kwargs={"pk": room_pk})
+
+
+class AddPhotoView(user_mixins.LoggedInOnlyView, FormView):
+    model = models.Photo
+    template_name = "rooms/photo_create.html"
+    fields = (
+        "caption",
+        "file",
+    )
+    form_class = forms.CreatePhotoForm
+
+    def form_valid(self, form):
+        pk = self.kwargs.get("pk")
+        form.save(pk)
+        messages.success(self.request, "Photo Uploaded")
+        return redirect(reverse("rooms:photos", kwargs={"pk": pk}))
+
+
+class CreateRoomView(user_mixins.LoggedInOnlyView, FormView):
+    form_class = forms.CreateRoomForm
+    template_name = "rooms/room_create.html"
+
+    def form_valid(self, form):
+        room = form.save()
+        room.host = self.request.user
+        room.save()
+        form.save_m2m()
+        messages.success(self.request, "Room Uploaded")
+        return redirect(reverse("rooms:detail", kwargs={"pk": room.pk}))
