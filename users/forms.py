@@ -40,7 +40,8 @@ class SignUpForm(forms.ModelForm):
         widget=forms.PasswordInput(attrs={"placeholder": "Password"})
     )
     password1 = forms.CharField(
-        widget=forms.PasswordInput(attrs={"placeholder": "Confirm Password"})
+        label="Confirm Password",
+        widget=forms.PasswordInput(attrs={"placeholder": "Confirm Password"}),
     )
 
     def clean_email(self):
