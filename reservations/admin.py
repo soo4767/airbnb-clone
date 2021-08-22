@@ -7,7 +7,7 @@ class ReservationAdmin(admin.ModelAdmin):
 
     """Reservation Admin Definition"""
 
-    list_display=(
+    list_display = (
         "room",
         "status",
         "check_in",
@@ -16,6 +16,9 @@ class ReservationAdmin(admin.ModelAdmin):
         "in_progress",
         "is_finished",
     )
-    list_filter=(
-        "status",
-    )
+    list_filter = ("status",)
+
+
+@admin.register(models.BookedDay)
+class BookedDayAdmin(admin.ModelAdmin):
+    list_display = ("day", "reservation")

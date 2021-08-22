@@ -60,18 +60,14 @@ class SignUpForm(forms.ModelForm):
         password1 = self.cleaned_data.get("password1")
 
         if password != password1:
-            print("Password confirmation does not match")
             raise forms.ValidationError("Password confirmation does not match")
         else:
-            print("Password confirmation match")
             return password
 
     def save(self, *args, **kwargs):
-        print("save")
         user = super().save(commit=False)
         email = self.cleaned_data.get("email")
         password = self.cleaned_data.get("password")
         user.username = email
         user.set_password(password)
         user.save()
-        print("save done")

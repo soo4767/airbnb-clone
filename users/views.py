@@ -1,5 +1,7 @@
 import os
 import requests
+from django.utils import translation
+from django.http.response import HttpResponse
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import UpdateView
 import requests
@@ -53,9 +55,7 @@ class SignUpView(FormView):
     success_url = reverse_lazy("core:home")
 
     def form_valid(self, form):
-        print("before save")
         form.save()
-        print("after save")
         email = form.cleaned_data.get("email")
         password = form.cleaned_data.get("password")
         user = authenticate(self.request, username=email, password=password)
@@ -115,7 +115,6 @@ def github_callback(request):
                     },
                 )
                 profile_json = profile_request.json()
-                print(profile_request.json())
                 username = profile_json.get("login", None)
                 if username is not None:
                     name = profile_json.get("name")
@@ -284,3 +283,10 @@ def switch_hosting(request):
     except KeyError:
         request.session["is_hosting"] = True
     return redirect(reverse("core:home"))
+
+
+def switch_lang(request):
+    lang = request.GET.get("lang", None)
+    if lang is not None:
+        request.session[translation.LANGUAGE_SESSION_KEY] = lang
+    return HttpResponse(status=200)

@@ -21,7 +21,10 @@ from django.conf.urls.static import static
 urlpatterns = [
     path("", include("core.urls", namespace="core")),
     path("rooms/", include("rooms.urls", namespace="rooms")),
+    path("reviews/", include("reviews.urls", namespace="reviews")),
     path("users/", include("users.urls", namespace="users")),
+    path("lists/", include("lists.urls", namespace="lists")),
+    path("reservations/", include("reservations.urls", namespace="reservations")),
     path("admin/", admin.site.urls),
 ]
 if settings.DEBUG:

@@ -166,7 +166,6 @@ class RoomPhotosView(user_mixins.LoggedInOnlyView, RoomDetail):
 
 @login_required
 def delete_photo(request, room_pk, photo_pk):
-    print(f"Should delete {photo_pk} from {room_pk}")
     user = request.user
 
     try:
