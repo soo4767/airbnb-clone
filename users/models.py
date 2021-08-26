@@ -70,6 +70,8 @@ class User(AbstractUser):
         max_length=50, choices=LOGIN_CHOICES, default=LOGIN_EMAIL
     )
 
+    objects = core_managers.CustomUserManager()
+
     def get_or_none(**kwargs):
         try:
             return User.objects.get(**kwargs)
