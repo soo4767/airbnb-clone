@@ -1,6 +1,7 @@
 branch-defaults:
   main:
     environment: airbnb-clone
+    group_suffix: null
 global:
   application_name: airbnb-clone
   branch: null
