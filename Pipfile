@@ -11,6 +11,7 @@ django-seed = "*"
 django-dotenv = "*"
 requests = "*"
 sentry-sdk = "*"
+django-storages = "*"
 
 [dev-packages]
 black = "*"
