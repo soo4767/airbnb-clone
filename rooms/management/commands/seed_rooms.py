@@ -50,7 +50,7 @@ class Command(BaseCommand):
                 room_models.Photo.objects.create(
                     caption=seeder.faker.sentence(),
                     room=room,
-                    file=f"room_photos/{random.randint(1,31)}.webp",
+                    file=f"https://airbnb-clone-soo4767.s3.ap-northeast-2.amazonaws.com/uploads/room_photos/{random.randint(1,31)}.webp",
                 )
             for a in amenities:
                 print("Making amenities...")
