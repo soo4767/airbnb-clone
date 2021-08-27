@@ -8,6 +8,8 @@ from django.utils.html import strip_tags
 from django.shortcuts import reverse
 from django.template.loader import render_to_string
 from core import managers as core_managers
+from imagekit.models import ProcessedImageField
+from imagekit.processors import ResizeToFill
 
 
 class User(AbstractUser):
@@ -47,7 +49,13 @@ class User(AbstractUser):
         (LOGING_KAKAO, "Kakao"),
     )
 
-    avatar = models.ImageField(upload_to="avatars", blank=True)
+    avatar = ProcessedImageField(
+        upload_to="avatars",
+        blank=True,
+        processors=[ResizeToFill(100, 100)],
+        format="JPEG",
+        options={"quality": 60},
+    )
     gender = models.CharField(
         _("gender"), choices=GENDER_CHOICES, max_length=10, blank=True
     )

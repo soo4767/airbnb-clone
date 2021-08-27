@@ -5,6 +5,8 @@ from django_countries.fields import CountryField
 from core import models as core_models
 from users import models as user_models
 from cal import Calendar
+from imagekit.models import ProcessedImageField
+from imagekit.processors import ResizeToFill
 
 
 class AbstractItem(core_models.TimeStampedModel):
@@ -52,7 +54,13 @@ class Photo(core_models.TimeStampedModel):
     """Photo Model Definition"""
 
     caption = models.CharField(max_length=80)
-    file = models.ImageField(upload_to="room_photos")
+    file = ProcessedImageField(
+        upload_to="room_photos",
+        blank=True,
+        processors=[ResizeToFill(600, 600)],
+        format="JPEG",
+        options={"quality": 60},
+    )
     room = models.ForeignKey("Room", related_name="photos", on_delete=models.CASCADE)
 
     def __str__(self):
