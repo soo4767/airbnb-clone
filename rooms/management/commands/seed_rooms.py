@@ -50,7 +50,7 @@ class Command(BaseCommand):
                 room_models.Photo.objects.create(
                     caption=seeder.faker.sentence(),
                     room=room,
-                    file=f"/room_photos/{random.randint(1,31)}.jpg",
+                    file=f"room_photos/{random.randint(1, 31)}.jpg",
                 )
             for a in amenities:
                 print("Making amenities...")
