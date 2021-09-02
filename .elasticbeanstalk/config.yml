@@ -1,13 +1,9 @@
 branch-defaults:
   main:
-    environment: airbnb-clone2
+    environment: nomadbnb
     group_suffix: null
-environment-defaults:
-  airbnb-clone2:
-    branch: null
-    repository: null
 global:
-  application_name: airbnb-clone
+  application_name: nomadbnb
   branch: null
   default_ec2_keyname: null
   default_platform: Python 3.8 running on 64bit Amazon Linux 2
